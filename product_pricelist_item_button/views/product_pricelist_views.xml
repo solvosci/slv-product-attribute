@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <!-- Tree view to pricelist item -->
+        <record id="product_pricelist_item_tree_view" model="ir.ui.view">
+            <field name="name">product.pricelist.item.tree</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Applicable On</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="pricelist_id" invisible="context.get('pricelist_id_invisible', False)"/>
+                </xpath>
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="price"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_tmpl_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- action to pricelist item -->
+        <record id="act_product_pricelist_item" model="ir.actions.act_window">
+            <field name="name">Product pricelist item</field>
+            <field name="res_model">product.pricelist.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- New form view: pricelist - added list products button - -->
+        <record id="product_pricelist_view_form" model="ir.ui.view">
+            <field name="name">product.pricelist.form</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="sequence" eval="18"/>
+            <field name="arch" type="xml">
+                <!-- add button with pricelist access before stat button -->
+                <xpath expr="//button[@class='oe_stat_button']" position="before">
+                    <button name="action_product_pricelist_item"
+                            type="object"
+                            groups="product.group_pricelist_item"
+                            class="oe_stat_button"
+                            icon="fa-book" >
+                        <field name="items_count" widget="statinfo" string="Items"/>
+                    </button>
+                </xpath>
+                <!-- make invisible pricelist item grid in this window -->
+                <xpath expr="//field[@name='item_ids']/.." position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
