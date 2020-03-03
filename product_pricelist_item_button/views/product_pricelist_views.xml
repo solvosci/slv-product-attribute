@@ -10,7 +10,7 @@
                     <attribute name="string">Applicable On</attribute>
                 </xpath>
                 <xpath expr="//field[@name='name']" position="before">
-                    <field name="pricelist_id" invisible="context.get('pricelist_id_invisible', False)"/>
+                    <field name="pricelist_id" invisible="context.get('pricelist_id_invisible', True)"/>
                 </xpath>
                 <xpath expr="//field[@name='date_end']" position="after">
                     <field name="price"/>
